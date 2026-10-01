@@ -1,0 +1,100 @@
+﻿@model IEnumerable<HospitalSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointments List";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #e0f2fe 0%, #cbd5e1 100%);
+        min-height: 100vh;
+    }
+
+    .appointments-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12);
+        overflow: hidden;
+    }
+
+    .table-custom thead {
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        color: white;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">Booked Appointments</h2>
+            <p class="text-muted mb-0">Overview of all patient reservations</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold">
+            + Book New Appointment
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="card appointments-card p-5 text-center">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="bi bi-calendar-x text-muted display-1"></i>
+                </div>
+                <h4 class="fw-bold text-secondary">No Appointments Found!</h4>
+                <p class="text-muted">There are no booked appointments yet. Click the button above to make your first reservation.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card appointments-card">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="py-3 px-4">#</th>
+                            <th class="py-3">Patient Name</th>
+                            <th class="py-3">Doctor Name</th>
+                            <th class="py-3">Specialization</th>
+                            <th class="py-3">Appointment Date</th>
+                            <th class="py-3 px-4">Appointment Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="px-4 fw-bold text-secondary">#@item.Id</td>
+                                <td class="fw-semibold text-dark">@item.PatientName</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (item.Doctor != null)
+                                        {
+                                            <img src="@item.Doctor.Image" alt="@item.Doctor.Name" class="rounded-circle me-2 shadow-sm" style="width: 40px; height: 40px; object-fit: cover;">
+                                            <span>@item.Doctor.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info text-dark rounded-pill px-3 py-2">
+                                        @item.Doctor?.Specialization
+                                    </span>
+                                </td>
+                                <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                <td class="px-4 fw-bold text-primary">
+                                    @DateTime.Today.Add(item.Time).ToString("hh:mm tt")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

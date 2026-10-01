@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="hero-section d-flex flex-column align-items-center justify-content-between text-center text-white position-relative py-5">
+   
+    <div class="hero-overlay"></div>
+
+   
+    <div class="container position-relative z-index-1 my-auto">
+        <h1 class="display-3 fw-bold mb-3">Welcome to Hospital System</h1>
+        <p class="fs-5 fw-light text-white-50 mb-4">Efficiently manage doctors, patients, and appointments</p>
+    </div>
+
+    
+    <div class="container position-relative z-index-1 mb-4">
+        <h2 class="fw-bold mb-4">Our Hospital Services</h2>
+        <div class="row g-4 justify-content-center">
+
+           
+            <div class="col-md-4">
+                <div class="glass-card p-4 rounded-4 h-100">
+                    <h4 class="fw-bold mb-2">Professional Doctors</h4>
+                    <p class="text-white-50 mb-0">Expert medical staff across multiple specialties to provide the best care.</p>
+                </div>
+            </div>
+
+           
+            <div class="col-md-4">
+                <div class="glass-card p-4 rounded-4 h-100">
+                    <h4 class="fw-bold mb-2">Easy Appointments</h4>
+                    <p class="text-white-50 mb-0">Book and manage appointments easily with our simple system.</p>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4">
+                <div class="glass-card p-4 rounded-4 h-100">
+                    <h4 class="fw-bold mb-2">Patient Care</h4>
+                    <p class="text-white-50 mb-0">High quality care and monitoring to ensure patient satisfaction.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .hero-section {
+        background: url('/images/cover1.jpg') no-repeat center center/cover;
+        min-height: 100vh; 
+        width: 100vw; 
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        margin-top: -1.5rem;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.6);
+    }
+
+    .z-index-1 {
+        z-index: 1;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    }
+</style>

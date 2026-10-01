@@ -1,0 +1,107 @@
+﻿@model List<HospitalSystem.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Select Doctor";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-center">Available Doctors</h2>
+
+   
+    <form method="get" class="row g-3 mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="col-md-5">
+            <input type="text" name="name" class="form-control" placeholder="Filter by Doctor Name" value="@ViewBag.Name">
+        </div>
+        <div class="col-md-5">
+            <input type="text" name="specialization" class="form-control" placeholder="Filter by Specialization" value="@ViewBag.Specialization">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var doctor in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm text-center">
+                        <img src="@doctor.Image" class="card-img-top p-3 rounded-circle mx-auto" style="width: 150px; height: 150px; object-fit: cover;" alt="@doctor.Name" onerror="this.src='https://via.placeholder.com/150';">
+                        <div class="card-body">
+                            <h5 class="card-title">@doctor.Name</h5>
+                            <p class="card-text text-muted">@doctor.Specialization</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 pb-3">
+                            @if (doctor.Name.Contains("Amr", StringComparison.OrdinalIgnoreCase))
+                            {
+                                
+                                <a href="@Url.Action("Book", "Appointment", new { doctorId = doctor.Id })"
+                                   onclick="return showDoctorWarning(event, this.href, 'amr');"
+                                   class="btn btn-success w-100">
+                                    Book Appointment
+                                </a>
+                            }
+                            else if (doctor.Name.Contains("Adel", StringComparison.OrdinalIgnoreCase) || doctor.Name.Contains("عادل", StringComparison.OrdinalIgnoreCase))
+                            {
+                                
+                                <a href="@Url.Action("Book", "Appointment", new { doctorId = doctor.Id })"
+                                   onclick="return showDoctorWarning(event, this.href, 'adel');"
+                                   class="btn btn-success w-100">
+                                    Book Appointment
+                                </a>
+                            }
+                            else
+                            {
+                               
+                                <a asp-action="Book" asp-route-doctorId="@doctor.Id" class="btn btn-success w-100">
+                                    Book Appointment
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p class="lead">No doctors found.</p>
+            </div>
+        }
+    </div>
+
+    
+    @if (ViewBag.TotalPages > 1)
+    {
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Create" asp-route-page="@i" asp-route-name="@ViewBag.Name" asp-route-specialization="@ViewBag.Specialization">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function showDoctorWarning(event, targetUrl, doctorKey) {
+            event.preventDefault(); 
+
+            if (doctorKey === 'amr') {
+                alert("انا مش دكتور يعم انت , انت رايح فين انا مبرمج هههه\n\nانا مش دكتور بس دمي خفيف لو عايز تكمل حجز كمل وانا هخليك تموت من الضحك هههههه");
+            }
+            else if (doctorKey === 'adel') {
+                alert("خلي بالك انت مش جاي تكشف انت جاي تهزر كدا كسكلياه ضالابواه ");
+            }
+
+            
+            window.location.href = targetUrl;
+        }
+    </script>
+}
